@@ -1,14 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:DevQuiz/challenge/challenge_controller.dart';
 import 'package:DevQuiz/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:DevQuiz/challenge/widgets/question_indicator/question_indicator_widget.dart';
 import 'package:DevQuiz/challenge/widgets/quiz/quiz_widget.dart';
+import 'package:DevQuiz/result/result_page.dart';
 import 'package:DevQuiz/shared/model/question_model.dart';
-import 'package:flutter/material.dart';
 
 class ChallengePage extends StatefulWidget {
   final List<QuestionModel> questions;
+  final String title;
 
-  ChallengePage({Key? key, required this.questions}) : super(key: key);
+  ChallengePage({
+    Key? key,
+    required this.questions,
+    required this.title,
+  }) : super(key: key);
 
   @override
   _ChallengePageState createState() => _ChallengePageState();
@@ -20,16 +26,31 @@ class _ChallengePageState extends State<ChallengePage> {
 
   @override
   void initState() {
+    /*
     controller.currentePageNofifier.addListener(() {
       setState(() {});
     });
+    */
 
-    /*
     pageController.addListener(() {
       controller.currentPage = pageController.page!.toInt() + 1;
     });
-    */
+
     super.initState();
+  }
+
+  void nextPage() {
+    if (controller.currentPage < widget.questions.length) {
+      pageController.nextPage(
+          duration: Duration(milliseconds: 10), curve: Curves.linear);
+    }
+  }
+
+  void onSelected(bool value) {
+    if (value) {
+      controller.qtdAnwserRight++;
+    }
+    nextPage();
   }
 
   @override
@@ -63,32 +84,46 @@ class _ChallengePageState extends State<ChallengePage> {
         controller: pageController,
         children: widget.questions
             .map(
-              (e) => QuizWidget(question: e),
+              (e) => QuizWidget(
+                  question: e,
+                  //onChange: nextPage,
+                  onSelected: onSelected),
             )
             .toList(),
       ),
       bottomNavigationBar: SafeArea(
         bottom: true,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Expanded(
-                  child: NextButtonWidget.white(
-                      label: "Pular",
-                      onTap: () {
-                        pageController.nextPage(
-                            duration: Duration(milliseconds: 10),
-                            curve: Curves.linear);
-                      })),
-              SizedBox(width: 7),
-              Expanded(
-                  child:
-                      NextButtonWidget.green(label: "Confirmar", onTap: () {})),
-            ],
-          ),
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ValueListenableBuilder<int>(
+                valueListenable: controller.currentePageNofifier,
+                builder: (context, value, _) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        if (value < widget.questions.length)
+                          Expanded(
+                              child: NextButtonWidget.white(
+                                  label: "Pular", onTap: nextPage)),
+                        //if (value == widget.questions.length)
+                        //SizedBox(width: 7),
+                        if (value == widget.questions.length)
+                          Expanded(
+                              child: NextButtonWidget.green(
+                                  label: "Confirmar",
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ResultPage(
+                                                  result:
+                                                      controller.qtdAnwserRight,
+                                                  title: widget.title,
+                                                  length:
+                                                      widget.questions.length,
+                                                )));
+                                  })),
+                      ],
+                    ))),
       ),
     );
   }

@@ -7,12 +7,15 @@ import 'package:DevQuiz/shared/model/awnser_model.dart';
 class AwnserWidget extends StatelessWidget {
   final bool isSelected;
   final AwnserModel awnser;
-  final VoidCallback onTap;
+  final bool disabled;
+  //final VoidCallback onTap;
+  final ValueChanged<bool> onTap;
 
   const AwnserWidget({
     Key? key,
     this.isSelected = false,
     required this.awnser,
+    this.disabled = false,
     required this.onTap,
   }) : super(key: key);
 
@@ -32,51 +35,58 @@ class AwnserWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: isSelected ? _selectedColorCardRight : AppColors.white,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.fromBorderSide(
-              BorderSide(
-                  color:
-                      isSelected ? _selectedBorderCardRight : AppColors.border),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  awnser.title,
-                  style: isSelected
-                      ? _selectedTextStyledRight
-                      : AppTextStyles.body,
-                ),
+      child: IgnorePointer(
+        ignoring: disabled,
+        child: GestureDetector(
+          //onTap: onTap,
+          onTap: () {
+            onTap(awnser.isRight);
+          },
+          child: Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: isSelected ? _selectedColorCardRight : AppColors.white,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.fromBorderSide(
+                BorderSide(
+                    color: isSelected
+                        ? _selectedBorderCardRight
+                        : AppColors.border),
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: isSelected ? _selectedColorRight : AppColors.white,
-                    borderRadius: BorderRadius.circular(500),
-                    border: Border.fromBorderSide(
-                      (BorderSide(
-                          color: isSelected
-                              ? _selectedBorderRight
-                              : AppColors.border)),
-                    )),
-                width: 24,
-                height: 24,
-                child: isSelected
-                    ? Icon(
-                        Icons.check,
-                        size: 16,
-                        color: Colors.white,
-                      )
-                    : null,
-              )
-            ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    awnser.title,
+                    style: isSelected
+                        ? _selectedTextStyledRight
+                        : AppTextStyles.body,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      color: isSelected ? _selectedColorRight : AppColors.white,
+                      borderRadius: BorderRadius.circular(500),
+                      border: Border.fromBorderSide(
+                        (BorderSide(
+                            color: isSelected
+                                ? _selectedBorderRight
+                                : AppColors.border)),
+                      )),
+                  width: 24,
+                  height: 24,
+                  child: isSelected
+                      ? Icon(
+                          Icons.check,
+                          size: 16,
+                          color: Colors.white,
+                        )
+                      : null,
+                )
+              ],
+            ),
           ),
         ),
       ),

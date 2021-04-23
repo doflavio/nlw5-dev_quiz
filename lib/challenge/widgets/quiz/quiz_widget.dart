@@ -1,12 +1,21 @@
+import 'package:flutter/material.dart';
+
 import 'package:DevQuiz/challenge/widgets/awnser/awnser_widget.dart';
 import 'package:DevQuiz/core/app_text_styles.dart';
 import 'package:DevQuiz/shared/model/awnser_model.dart';
 import 'package:DevQuiz/shared/model/question_model.dart';
-import 'package:flutter/material.dart';
 
 class QuizWidget extends StatefulWidget {
   final QuestionModel question;
-  const QuizWidget({Key? key, required this.question}) : super(key: key);
+  //final VoidCallback onChange;
+  final ValueChanged<bool> onSelected;
+
+  const QuizWidget({
+    Key? key,
+    //required this.onChange,
+    required this.question,
+    required this.onSelected,
+  }) : super(key: key);
 
   @override
   _QuizWidgetState createState() => _QuizWidgetState();
@@ -36,11 +45,13 @@ class _QuizWidgetState extends State<QuizWidget> {
             AwnserWidget(
               awnser: awnser(i),
               isSelected: indexSelected == i,
-              onTap: () {
+              disabled: indexSelected != -1,
+              onTap: (value) {
                 indexSelected = i;
-                setState(
-                  () {},
-                );
+                setState(() {});
+                Future.delayed(Duration(seconds: 1)).then(
+                    //(value) => widget.onChange(),
+                    (_) => widget.onSelected(value));
               },
             )
 
