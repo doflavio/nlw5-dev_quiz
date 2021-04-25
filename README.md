@@ -1,16 +1,12 @@
-# dev_quiz
+# NLW#5 - Trilha Flutter
 
-A new Flutter project.
+# Sobre o projeto
 
-## Getting Started
+Uma aplicação mobile construída durante o 5ª NLW - Evento online com foco em levar o programador para um próximo nível (https://nextlevelweek.com). 
 
-This project is a starting point for a Flutter application.
+Desenvolvemos do zero uma aplicação de um quiz em Flutter que busca as informações em um json dentro da pasta do projeto.
 
-A few resources to get you started if this is your first Flutter project:
+![Tenconlogias](https://raw.githubusercontent.com/doflavio/nlw5-dev_quiz/main/assets/imgresultadofinal/telas.png)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Autor
+Flávio Leandro Pereira
