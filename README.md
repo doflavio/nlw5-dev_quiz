@@ -2,7 +2,9 @@
 
 # Sobre o projeto
 
-Uma aplicação mobile construída durante o 5ª NLW - Evento online com foco em levar o programador para um próximo nível (https://nextlevelweek.com). 
+Uma aplicação mobile construída durante o 5ª NLW #NextLevelWeek - organizada pela Rocketseat. 
+
+Foi uma semana inteira de novos aprendizados e conceitos. Evento online com foco em levar o programador para um próximo nível (https://nextlevelweek.com). 
 
 Desenvolvemos do zero uma aplicação de um quiz em Flutter que busca as informações em um json dentro da pasta do projeto.
 
