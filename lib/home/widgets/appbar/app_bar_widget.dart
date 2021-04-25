@@ -1,4 +1,5 @@
 import 'package:DevQuiz/core/app_gradients.dart';
+import 'package:DevQuiz/core/app_images.dart';
 import 'package:DevQuiz/core/app_text_styles.dart';
 import 'package:DevQuiz/home/widgets/score_card/score_card_widget.dart';
 import 'package:DevQuiz/shared/model/user_model.dart';
@@ -42,7 +43,9 @@ class AppBarWidget extends PreferredSize {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
-                              image: NetworkImage(user.photoUrl)),
+                            image: NetworkImage(user.photoUrl),
+                            //image: AssetImage(AppImages.avatar),
+                          ),
                         ),
                       ),
                     ],
@@ -53,7 +56,9 @@ class AppBarWidget extends PreferredSize {
                       0.0,
                       1.0,
                     ),
-                    child: ScoreCardWidget()),
+                    child: ScoreCardWidget(
+                      percent: user.score / 100,
+                    )),
               ],
             ),
           ),
